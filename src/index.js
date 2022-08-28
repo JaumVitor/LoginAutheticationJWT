@@ -12,6 +12,7 @@ connectDataBase()
 
 // Congigurando rotas 
 const authControler = require('./routes/authControler')
+const authAccess = require('./routes/authAccess')
 
 // Configurando o body-parser
 app.use(bodyParser.json())
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', authControler)
+app.use('/access', authAccess)
 
 const port = process.env.PORT 
 app.listen(port, () => console.log(`Listener in port ${port}`))

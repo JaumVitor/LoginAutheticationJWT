@@ -69,7 +69,7 @@ router.post ('/authentication', async (req, res) => {
           user.password = undefined
           res.status(201).send({
             user, 
-            token: generateToken( { id: user._id} )
+            token: generateToken( {id: user._id} )
           })
         }
         // email encotrado e senha incorreta
