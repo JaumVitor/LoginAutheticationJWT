@@ -6,6 +6,9 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User.Model')
 const { secret } = require('../config/auth.json')
 
+// Usando nodemailer para mandar mensagem no email, quando usuario se registrar
+const userNodeMailer = require('../modules/mailer')
+
 // Criando function para gerar meu hash 
 function generateToken ( params = {} ){
   // Passando o identificador unico do user, secret e tempo de expiração do token
@@ -15,7 +18,7 @@ function generateToken ( params = {} ){
   return token
 }
 
-router.get ('/', (req, res) => {
+router.get ('/', async (req, res) => {
   res.status(200).send('OK')
 })
 
@@ -35,6 +38,10 @@ router.post ('/register', async (req, res) => {
             .then( user => {
               // Omitindo a senha na resposta
               user.password = undefined
+              
+              // Notificando no mailtrap
+              userNodeMailer()
+
               res.status(201).send({
                 user,
                 token: generateToken( {id: user._id} )
@@ -67,6 +74,7 @@ router.post ('/authentication', async (req, res) => {
         // email compativel e senha correta 
         if (await bcrypt.compare( password, user.password)){
           user.password = undefined
+          // "Erro ao usar o res.status"
           res.status(201).send({
             user, 
             token: generateToken( {id: user._id} )

@@ -1,16 +1,14 @@
 const express = require('express')
-
 const app = express()
-
 const bodyParser = require('body-parser')
 
 require('dotenv').config()
 
-// chamando a função que foi exportada 
+// chamando a função que foi exportada
 const { connectDataBase } = require('./database/connect')
 connectDataBase()
 
-// Congigurando rotas 
+// Congigurando rotas
 const authControler = require('./routes/authControler')
 const authAccess = require('./routes/authAccess')
 
@@ -25,5 +23,5 @@ app.get('/', (req, res) => {
 app.use('/auth', authControler)
 app.use('/access', authAccess)
 
-const port = process.env.PORT 
+const port = process.env.PORT
 app.listen(port, () => console.log(`Listener in port ${port}`))
