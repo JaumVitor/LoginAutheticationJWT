@@ -21,6 +21,16 @@ const UserSchema = new mongoose.Schema({
     select: false //Não trazer-lo quando requisitado
   },
 
+  passwordForget: {
+    type: String,
+    require: true
+  },
+
+  passwordForgetExpires: {
+    type: String, 
+    require: true
+  },
+
   createAt: {
     type: Date,
     default: Date.now()
